@@ -4,4 +4,5 @@ type Student struct {
 	Name string `json:"name"`
 	PRN  string `json:"prn"`
 	Year int    `json:"year"`
+	//FingerPrintID string `json:"fingerprintid"`
 }
