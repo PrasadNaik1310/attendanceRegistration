@@ -1,8 +1,11 @@
 package models
 
 type Student struct {
-	Name string `json:"name"`
-	PRN  string `json:"prn"`
-	Year int    `json:"year"`
-	//FingerPrintID string `json:"fingerprintid"`
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	PRN   string `json:"prn"`
+	//Year          int    `json:"year"`
+
+	FingerPrintID string `json:"fingerPrintId"`
 }

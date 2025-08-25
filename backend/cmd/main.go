@@ -6,9 +6,9 @@ import (
 
 	"github.com/PrasadNaik1310/attendanceRegistration/db"
 	"github.com/PrasadNaik1310/attendanceRegistration/models"
+	"github.com/PrasadNaik1310/attendanceRegistration/services"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 func main() {
@@ -37,21 +37,16 @@ func main() {
 	})
 
 	app.Get("/api/students", func(c *fiber.Ctx) error {
-		var students []models.Student
-		collection := db.DB.Collection("students")
-		cursor, err := collection.Find(context.Background(), bson.M{})
+		//call FetchStudentsFromAPI
+		students, err := services.FetchStudentsFromAPI()
 		if err != nil {
+			log.Printf("Could not fetch Students from API : %v", err)
 			return c.Status(500).JSON(fiber.Map{"error": "Failed to fetch students"})
 		}
-		defer cursor.Close(context.Background())
-		for cursor.Next(context.Background()) {
-			var student models.Student
-			if err := cursor.Decode(&student); err != nil {
-				return c.Status(500).JSON(fiber.Map{"error": "Failed to decode student"})
-			}
-			students = append(students, student)
+		if len(students) > 0 {
+			return c.JSON(students)
 		}
-		return c.JSON(students)
+		return c.Status(404).JSON(fiber.Map{"error": "No students found"})
 	})
 
 	app.Post("/api/students", func(c *fiber.Ctx) error {
