@@ -61,12 +61,12 @@ export default function Header() {
             </Link>
             <span className="font-bold text-xl">Registered Students</span>
           </div>
-          <button 
+          {/* <button 
             onClick={() => setIsFormOpen(true)}
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors ml-10"
           >
             + Create New Student
-          </button>
+          </button> */}
         </div>
       </div>
       
